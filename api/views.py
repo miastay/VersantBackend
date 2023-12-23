@@ -20,7 +20,17 @@ def author(request):
         query = jsonData.get("query")
         print(query)
         resp = gs.search_author(query)
-        #print(resp)
+        return JsonResponse(resp)
+    
+from api.t5 import inference as t5
+
+@csrf_exempt
+def summary(request):
+    if request.method == "POST":
+        jsonData = json.loads(request.body)
+        body = jsonData.get("query")
+        print(body)
+        resp = t5.query({"inputs": body})
         return JsonResponse(resp)
 
 
